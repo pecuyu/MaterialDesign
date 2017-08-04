@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/id_menu"
-        android:icon="@mipmap/ic_menu"
-        android:title="菜单"
+        android:icon="@mipmap/ic_backup"
+        android:title="备份"
         app:showAsAction="ifRoom"  />
     <item
         android:id="@+id/id_comment"
