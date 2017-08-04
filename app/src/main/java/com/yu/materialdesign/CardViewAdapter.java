@@ -1,13 +1,14 @@
 package com.yu.materialdesign;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
@@ -35,15 +36,19 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_image_card_view,parent,false);
+        if (context == null) {
+            context = parent.getContext();
+        }
+        View view = LayoutInflater.from(context).inflate(R.layout.item_image_card_view, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Fruit fruit = fruitList[position];
-        holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), fruit.getResId()));
+//        holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), fruit.getResId()));
         holder.tvName.setText(fruit.getName());
+        Glide.with(context).load(fruit.getResId()).into(holder.imageView);
     }
 
 

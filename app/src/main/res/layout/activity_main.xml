@@ -11,27 +11,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/id_tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/id_rv_list"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/id_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            <!-- layout_scrollFlags, Toolbar随RecyclerView进行滚动 -->
+        </android.support.design.widget.AppBarLayout>
+
+        <!-- 下拉刷新 -->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/id_srl_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <!-- AppBarLayout解决RecyclerView覆盖Toolbar ，RecyclerView添加layout_behavior属性，加入下拉刷新后，转移到SwipeRefreshLayout -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!-- 悬浮按钮 -->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/id_floating_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
+            android:layout_margin="15dp"
             android:src="@mipmap/ic_done"
-            app:elevation="5dp"
-            android:layout_margin="15dp"/>
+            app:elevation="5dp" />
     </android.support.design.widget.CoordinatorLayout>
 
     <!--<LinearLayout
@@ -48,12 +67,13 @@
             />
     </LinearLayout>-->
 
+    <!-- 左侧菜单导航栏 -->
     <android.support.design.widget.NavigationView
         android:id="@+id/id_nav_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/nv_header"
         android:layout_gravity="start"
+        app:headerLayout="@layout/nv_header"
         app:menu="@menu/nv_menu" />
 
 

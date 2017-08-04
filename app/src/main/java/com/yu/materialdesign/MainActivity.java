@@ -1,12 +1,14 @@
 package com.yu.materialdesign;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,6 +89,32 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(adapter);
 
+        final SwipeRefreshLayout refresh = (SwipeRefreshLayout) findViewById(R.id.id_srl_list);
+        refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {  /*主线程*/
+                refreshLayout(refresh);
+
+            }
+
+        });
+    }
+
+    public void refreshLayout(final SwipeRefreshLayout refresh) {
+        new Thread(){
+            @Override
+            public void run() {
+                SystemClock.sleep(5000);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh.setRefreshing(false);
+                    }
+                });
+                super.run();
+            }
+        }.start();
     }
 
     @Override
