@@ -1,6 +1,8 @@
 package com.yu.materialdesign;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,6 +27,32 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         }
+
+        NavigationView nv = (NavigationView) findViewById(R.id.id_nav_view);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.id_nav_friends:
+                        Toast.makeText(MainActivity.this,"nav_friends", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_call:
+                        Toast.makeText(MainActivity.this,"nav_call", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_location:
+                        Toast.makeText(MainActivity.this,"nav_location", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_mail:
+                        Toast.makeText(MainActivity.this,"nav_mail", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_nav_task:
+                        Toast.makeText(MainActivity.this,"nav_task", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                drawer.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
     }
 
     @Override

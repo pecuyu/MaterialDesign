@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="180dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/id_civ"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/strawberry" />
+
+    <TextView
+        android:id="@+id/id_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/id_tv_mail"
+        android:text="niko"
+        android:textColor="#6c8"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/id_tv_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="xxx@qq.com"
+        android:textColor="#6c8"
+        android:layout_marginBottom="5dp"
+        android:textSize="15sp" />
+</RelativeLayout>
