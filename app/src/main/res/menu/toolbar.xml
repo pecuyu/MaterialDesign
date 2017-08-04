@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/id_menu"
+        android:icon="@mipmap/ic_menu"
+        android:title="菜单"
+        app:showAsAction="ifRoom"  />
+    <item
+        android:id="@+id/id_comment"
+        android:icon="@mipmap/ic_comment"
+        android:title="评论"
+        app:showAsAction="always"  />
+    <item
+        android:id="@+id/id_delete"
+        android:icon="@mipmap/ic_delete"
+        android:title="移除"
+        app:showAsAction="ifRoom"  />
+</menu>
