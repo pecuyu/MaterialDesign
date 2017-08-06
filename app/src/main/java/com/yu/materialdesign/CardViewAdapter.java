@@ -1,6 +1,7 @@
 package com.yu.materialdesign;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +46,20 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Fruit fruit = fruitList[position];
+        final Fruit fruit = fruitList[position];
 //        holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), fruit.getResId()));
         holder.tvName.setText(fruit.getName());
         Glide.with(context).load(fruit.getResId()).into(holder.imageView);
+        holder.itemView.setOnClickListener(new View.OnClickListener() { /*条目点击监听器*/
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, FruitActivity.class);
+                intent.putExtra("name", fruit.getName());
+                intent.putExtra("resId", fruit.getResId());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
 
