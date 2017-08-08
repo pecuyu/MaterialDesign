@@ -23,7 +23,7 @@
                 android:background="@color/colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ToolbarPopupTheme" />
             <!-- layout_scrollFlags, Toolbar随RecyclerView进行滚动 -->
         </android.support.design.widget.AppBarLayout>
 

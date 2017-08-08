@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
+
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
-
+        setMenuIconEnable(menu,true);
         MenuItem searchItem = menu.findItem(R.id.id_search_view);
         searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -178,5 +180,26 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+
+
+    /**
+     * 设置条目图标显示
+     * @param menu
+     * @param enable
+     */
+    protected void setMenuIconEnable(Menu menu, boolean enable) {
+        try {
+            Class<?> clazz = Class.forName("android.support.v7.view.menu.MenuBuilder");
+            Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+            m.setAccessible(true);
+
+            // MenuBuilder实现Menu接口，创建菜单时，传进来的menu其实就是MenuBuilder对象(java的多态特征)
+            m.invoke(menu, enable);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
