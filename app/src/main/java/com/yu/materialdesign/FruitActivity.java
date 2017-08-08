@@ -1,10 +1,10 @@
 package com.yu.materialdesign;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -31,9 +31,9 @@ public class FruitActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         int resId = intent.getIntExtra("resId", R.mipmap.ic_launcher);
-        collapsingToolbar.setTitle(name);
         collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
-        Glide.with(this).load(resId).into(imageView);
+        collapsingToolbar.setTitle(name);   /*设置标题*/
+        Glide.with(this).load(resId).into(imageView); /*设置图片*/
         textView.setText(generateFruitContent(name));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

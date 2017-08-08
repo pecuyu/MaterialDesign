@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
     RecyclerView recyclerView;
-
+    SearchView searchView;
+    FloatingActionButton floatButton;
+    NavigationView nv;
+    SwipeRefreshLayout refresh;
     private Fruit[] fruits = {new Fruit("Apple", R.mipmap.apple), new Fruit("Banana", R.mipmap.banana),
             new Fruit("Orange", R.mipmap.orange), new Fruit("Watermelon", R.mipmap.watermelon),
             new Fruit("Pear", R.mipmap.pear), new Fruit("Grape", R.mipmap.grape),
@@ -33,17 +37,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.id_tool_bar);
-        setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.id_layout_drawer);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-        }
+        initViews();
+        initEvents();
+    }
 
-        FloatingActionButton floatButton = (FloatingActionButton) findViewById(R.id.id_floating_btn);
+    private void initEvents() {
         floatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NavigationView nv = (NavigationView) findViewById(R.id.id_nav_view);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -83,22 +80,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.id_rv_list);
-        CardViewAdapter adapter = new CardViewAdapter(fruits, this);
-//        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(adapter);
-
-        final SwipeRefreshLayout refresh = (SwipeRefreshLayout) findViewById(R.id.id_srl_list);
-        refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {  /*主线程*/
                 refreshLayout(refresh);
-
             }
-
         });
+
+    }
+
+    private void initViews() {
+        setContentView(R.layout.activity_main);
+        toolbar = (Toolbar) findViewById(R.id.id_tool_bar);
+        drawer = (DrawerLayout) findViewById(R.id.id_layout_drawer);
+        recyclerView = (RecyclerView) findViewById(R.id.id_rv_list);
+        nv = (NavigationView) findViewById(R.id.id_nav_view);
+        floatButton = (FloatingActionButton) findViewById(R.id.id_floating_btn);
+        refresh = (SwipeRefreshLayout) findViewById(R.id.id_srl_list);
+        refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+
+        initSupportActionBar();
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        CardViewAdapter adapter = new CardViewAdapter(fruits, this);
+//        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private void initSupportActionBar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+        }
     }
 
     public void refreshLayout(final SwipeRefreshLayout refresh) {
@@ -120,6 +140,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.id_search_view);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getApplicationContext(), "text=" + newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
 
     }
